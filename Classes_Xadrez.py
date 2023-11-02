@@ -3,7 +3,7 @@ import numpy as np
 class Tabuleiro:
     def __init__(self, **key_peça_posição, tamanho):
         self.tamanho = tamanho
-        self.estado = np.array(['t1','t2','K','t3','t4'] + ['t'+str(x) for x in range(5,10)] + ['--']*5 + ['T'+str(x) for x in range(5,10)] + ['T1','T2','R','T3','T4']).reshape(5, 5)
+        self.estado = np.array(['t1','t2','r','t3','t4'] + ['t'+str(x) for x in range(5,10)] + ['--']*5 + ['T'+str(x) for x in range(5,10)] + ['T1','T2','R','T3','T4']).reshape(5, 5)
 
     def tamanho(self):
         return tamanho
