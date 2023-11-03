@@ -10,13 +10,14 @@ def verifica_peça_no_tabuleiro(peças, peça_desejada):
 def verifica_pos_válida():
     pass
 
+turno=0
+
 tab = Tabuleiro()
 P1 = Peça([4, 4], 'P1', tab)
 P2 = Peça([3, 4], 'P2', tab)
 mapeamento_peças = {'P1': P1, 'P2': P2}
 
 print(tab.get_estado())
-
 
 
 while True:
