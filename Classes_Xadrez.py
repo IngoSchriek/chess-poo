@@ -1,3 +1,4 @@
+import utils
 import numpy as np
 
 class Tabuleiro:
@@ -47,21 +48,24 @@ class Peça:
         
     def set_nome(self, nome) -> None:
         self.nome=nome
-
-"""
+""""
 class Torre(Peça):
     def verifica(self, lance):
         posi_lista=self.posi
-        if lance[0] in range(tab.tamanho()) and lance[0] in range(tab.tamanho()):
+        if lance[0] in range(tab.tamanho()) and lance[1] in range(tab.tamanho()):
             #verifica o bagulho da torre não poder passar por cima dos manos e não comer aliados
             if lance!=posi_lista:
                 if lance[0] == posi_lista[0]:
-                    # for x in range()
-    else:
-        return False
-                
-"""
-                    
+                    for x in range(min(posi_lista[1],lance[1])+1, max(posi_lista[1],lance[1])-1):
+                        if tab.get_peça_cord([posi_lista[0],x])=="--":
+                            if get_peça_cord(lance)=='--':
+                                return True
+                            else:
+                                if tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper(): 
+                                    return True
+        else:
+            return False
+""""           
 class Rei(Peça):
     def verifica(self, lance):
         posi_lista=self.posi
@@ -83,7 +87,3 @@ class Rei(Peça):
             return False
 
 
-"""
-low = {}
-for x in range(9):
-    low['t'+x] = Torre([]) 
