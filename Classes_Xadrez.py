@@ -18,7 +18,12 @@ class Tabuleiro:
     def set_estado(self, posiçoes: dict) -> None:
         for peça, cord in posiçoes.items():
             x,y = cord
-            self.estado[y][x] = peça 
+            self.estado[y][x] = peça
+    
+    def get_peça_cord(self, cord)-> str:
+        x,y=cord
+        return self.estado[y][x]
+
 
 
 class Peça:
@@ -68,11 +73,11 @@ class Rei(Peça):
             #ve se o rei não quer sair do tabuleiro
             if lance[0] in range(tab.tamanho()) and lance[0] in range(tab.tamanho()):
                 #olha o tab pra ver se o slot ta desocupado sla
-                if tab.get_estado()[lance[1]][lance[0]]=='--':
+                if tab.get_peça_cord(lance)=='--':
                     return True
                 #olha pra ver se os times são diferentes se ten alguem ocupando o slot
                 else:
-                    if tab.get_estado()[lance[1]][lance[0]][0].isupper()!=get_nome(self).isupper(): 
+                    if tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper(): 
                         return True
         else:
             return False
