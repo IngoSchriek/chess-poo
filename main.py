@@ -18,8 +18,6 @@ while True:
     peça = input('Peça: ')
     
     tab.set_estado({'--': dict[p1.get_nome()]})
-    p1.set_posi(list(map(int,input().split())))
-    dict[p1.get_nome()] = p1.get_posi()
-    print(dict)
-    tab.set_estado(dict)
+    p1.set_posi(tab, list(map(int,input().split())))
+
     print(tab.get_estado())
