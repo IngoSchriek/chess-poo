@@ -15,7 +15,7 @@ class Tabuleiro:
     def get_estado(self) -> np.array:
         return self.estado
 
-    def set_estado(self, posiçoes: dict) -> None:
+    def set_estado(self, **posiçoes) -> None:
         for peça, cord in posiçoes.items():
             x,y = cord
             self.estado[y][x] = peça 
@@ -29,7 +29,8 @@ class Peça:
         return self.nome
     def get_posi(self):
         return self.posi
-    def set_posi(self, pos):
+    def set_posi(self, tabuleiro, pos):
+        tabuleiro.set_estado(self.nome=pos)
         self.posi=pos
     def set_nome(self, nome):
         self.nome=nome
