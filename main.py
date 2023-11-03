@@ -1,14 +1,7 @@
 from Classes_Xadrez import Peça, Tabuleiro
+from utils import verifica_peça_no_tabuleiro
+
 import numpy as np
-
-def verifica_peça_no_tabuleiro(peças, peça_desejada):
-    while not peça_desejada in peças:
-        print('Peça não encontrada no tabuleiro. ')
-        peça_desejada = input('Peça: ')
-    return peça_desejada
-
-def verifica_pos_válida():
-    pass
 
 turno=0
 
