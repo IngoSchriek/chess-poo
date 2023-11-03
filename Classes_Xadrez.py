@@ -22,17 +22,25 @@ class Tabuleiro:
 
 
 class Peça:
-    def __init__(self, posi: list, nome: str) -> None:
+    def __init__(self, posi: list, nome: str, tab: Tabuleiro) -> None:
         self.posi=posi
         self.nome=nome
-    def get_nome(self):
+        #posição inicial
+        self.tab=tab
+        tab.set_estado({nome:posi})
+
+    def get_nome(self) -> str:
         return self.nome
-    def get_posi(self):
+
+    def get_posi(self) -> list:
         return self.posi
-    def set_posi(self, tabuleiro, pos):
-        tabuleiro.set_estado({self.nome: pos})
-        self.posi=pos
-    def set_nome(self, nome):
+
+    def set_posi(self, pos_anterior, pos_desejada) -> None:
+        self.posi=pos_desejada
+        self.tab.set_estado({'--': pos_anterior})
+        self.tab.set_estado({self.nome: pos_desejada})
+        
+    def set_nome(self, nome) -> None:
         self.nome=nome
 
 """
