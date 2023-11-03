@@ -7,8 +7,8 @@ turno=0
 
 tab = Tabuleiro()
 P1 = Peça([4, 4], 'P1', tab)
-P2 = Peça([3, 4], 'P2', tab)
-mapeamento_peças = {'P1': P1, 'P2': P2}
+p1 = Peça([3, 4], 'p1', tab)
+mapeamento_peças = {'P1': P1, 'p1': p1}
 
 print(tab.get_estado())
 
@@ -28,3 +28,4 @@ while True:
     peça_movendo.set_posi(pos_atual, pos_desejada)
 
     print(tab.get_estado())
+    turno+=1

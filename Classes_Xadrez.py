@@ -48,7 +48,7 @@ class Peça:
         
     def set_nome(self, nome) -> None:
         self.nome=nome
-""""
+
 class Torre(Peça):
     def verifica(self, lance):
         posi_lista=self.posi
@@ -65,7 +65,7 @@ class Torre(Peça):
                                     return True
         else:
             return False
-""""           
+
 class Rei(Peça):
     def verifica(self, lance):
         posi_lista=self.posi
@@ -85,5 +85,3 @@ class Rei(Peça):
                         return True
         else:
             return False
-
-
