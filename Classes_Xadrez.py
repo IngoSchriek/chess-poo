@@ -55,25 +55,30 @@ class Torre(Peça):
     else:
         return False
                 
-            
+"""
+                    
 class Rei(Peça):
     def verifica(self, lance):
         posi_lista=self.posi
-        #gera as tres cordenadas horizontais que o rei pode acessar a partir da posição horizontal dele dele
+        #gera as tres cordenadas horizontais e verticais que o rei pode acessar a partir da posição horizontal dele dele
         cord1, cord1[0], cord1[1]= [posi_lista[0]]*3, cord1[0]+1, cord1[0]-1
         cord2, cord2[0], cord2[1]=[posi_lista[1]]*3, cord2[0]+1, cord2[0]-1
-
-        
+        #vê se o rei ta querendo se mover pra casa valida gerada anteriormente
         if (lance[0] in cord1 and lance[1] in cord2) and lance!=posi_lista:
+            #ve se o rei não quer sair do tabuleiro
             if lance[0] in range(tab.tamanho()) and lance[0] in range(tab.tamanho()):
-                #verifica o bagulho do rei não comer aliados
-                if
+                #olha o tab pra ver se o slot ta desocupado sla
+                if tab.get_estado()[lance[1]][lance[0]]=='--':
                     return True
-    else:
-        return False
+                #olha pra ver se os times são diferentes se ten alguem ocupando o slot
+                else:
+                    if tab.get_estado()[lance[1]][lance[0]][0].isupper()!=get_nome(self).isupper(): 
+                        return True
+        else:
+            return False
 
 
+"""
 low = {}
 for x in range(9):
     low['t'+x] = Torre([]) 
-"""

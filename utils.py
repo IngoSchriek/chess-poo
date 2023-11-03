@@ -8,3 +8,4 @@ def modifica_turno(turno, peça):
         return peça.upper()
     else:
         return peça.lower()
+print("--".isupper())
