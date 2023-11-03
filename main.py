@@ -1,5 +1,5 @@
 from Classes_Xadrez import Peça, Tabuleiro
-from utils import verifica_peça_no_tabuleiro,modifica_turno
+from utils import verifica_peça_no_tabuleiro,modifica_turno,check
 
 import numpy as np
 
@@ -15,6 +15,7 @@ print(tab.get_estado())
 
 while True:
     #pede a peça desejada e já deixa no do time tlgd
+    
     peça_desejada = modifica_turno(turno,input('Peça: '))
     peça_desejada = verifica_peça_no_tabuleiro(mapeamento_peças, peça_desejada)
 
@@ -24,6 +25,12 @@ while True:
     if pos_desejada[0] == -1:
         #recomeça o loop
         continue
+    rei_turno=modifica_turno(turno,"R")
+    if peça_desejada!=rei_turno:
+        check=check(rei_turno,mapeamento_peças)
+    else:
+        check=check(pos_desejada,mapeamento_peças)
+    
 
     peça_movendo.set_posi(pos_atual, pos_desejada)
 

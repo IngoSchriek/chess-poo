@@ -8,3 +8,15 @@ def modifica_turno(turno, peça):
         return peça.upper()
     else:
         return peça.lower()
+
+def check(posição_rei, peças_dic):
+    contador=0
+    for x in peças_dic.value():
+        if x.verifica(posição_rei)== True:
+            contador+=1
+    if x!=0:
+        return True
+    else:
+        return False
+
+        
