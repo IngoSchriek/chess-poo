@@ -1,3 +1,6 @@
+from Classes_Xadrez import Peça, Tabuleiro
+
+
 def verifica_peça_no_tabuleiro(peças, peça_desejada):
     while not peça_desejada in peças:
         print('Peça não encontrada no tabuleiro. ')
@@ -18,5 +21,10 @@ def check(posição_rei, peças_dic):
         return True
     else:
         return False
+
+def destruidor(dicionario:dict, tab:Tabuleiro, lance:list)->None:
+    key=tab.get_peça_cord(lance)
+    if key!="--":
+        del dicionario[key]
 
         
