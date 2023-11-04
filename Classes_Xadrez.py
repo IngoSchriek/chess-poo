@@ -24,6 +24,14 @@ class Tabuleiro:
     def get_peça_cord(self, cord)-> str:
         x,y=cord
         return self.estado[y][x]
+    
+    def dentro_tab(self, cord)->bool:
+        positivo=cord[0]>=0 and cord[1]>=0
+        dentro=cord[0]<=self.tamanho and cord[1]<=self.tamanho
+        if positivo and dentro:
+            return True
+        else:
+            return False
 
 
 
@@ -52,7 +60,7 @@ class Peça:
 class Torre(Peça):
     def verifica(self, lance):
         posi_lista=self.posi
-        if lance[0] in range(tab.tamanho()) and lance[1] in range(tab.tamanho()):
+        if self.dentro_tab(tab.tamanho()):
             #verifica o bagulho da torre não poder passar por cima dos manos e não comer aliados
             if lance!=posi_lista:
                 if lance[0] == posi_lista[0]:
@@ -75,7 +83,7 @@ class Rei(Peça):
         #vê se o rei ta querendo se mover pra casa valida gerada anteriormente
         if (lance[0] in cord1 and lance[1] in cord2) and lance!=posi_lista:
             #ve se o rei não quer sair do tabuleiro
-            if lance[0] in range(tab.tamanho()) and lance[0] in range(tab.tamanho()):
+            if self.dentro_tab(tab.tamanho()):
                 #olha o tab pra ver se o slot ta desocupado sla
                 if tab.get_peça_cord(lance)=='--':
                     return True
