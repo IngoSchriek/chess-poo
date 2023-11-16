@@ -93,3 +93,27 @@ class Rei(Peça):
                         return True
         else:
             return False
+
+class Cavalo(Peça):
+    def verifica(self, lance):
+        posi_lista=self.posi
+        #lances que um cavalo pode somar para a posição atual dele
+        lances_cavalo=[[2,1],[-2,1],[2,-1],[-2,-1],
+        [1,2],[-1,2],[1,-2],[-1,-2]]
+        #soma todos os possiveis lances e armazena numa lista
+        lances_possiveis=[]
+        for x in lances_cavalo:
+            lances_possiveis.append([posi_lista[0]+x[0],posi_lista[1]+x[1]])
+        #vê se o cavalo ta querendo se mover pra casa valida gerada anteriormente
+        if (lance in lances_possiveis) and lance!=posi_lista:
+            #ve se o cavalo não quer sair do tabuleiro
+            if self.dentro_tab(tab.tamanho()):
+                #olha o tab pra ver se o slot ta desocupado sla
+                if tab.get_peça_cord(lance)=='--':
+                    return True
+                #olha pra ver se os times são diferentes se ten alguem ocupando o slot
+                else:
+                    if tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper(): 
+                        return True
+        else:
+            return False

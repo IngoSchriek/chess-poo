@@ -22,6 +22,13 @@ def check(posição_rei, peças_dic):
     else:
         return False
 
+def checkmate(tabuleiro, turno, dicionario):
+    tabuleiro2=tabuleiro
+    for x in dicionario(values):
+        if x.get_nome()[0]==:
+            for y in posições:
+                
+
 def destruidor(dicionario:dict, tab:Tabuleiro, lance:list)->None:
     key=tab.get_peça_cord(lance)
     if key!="--":
