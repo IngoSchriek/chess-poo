@@ -143,3 +143,29 @@ class Cavalo(Peça):
                         return True
         else:
             return False
+        
+class Peão(Peça):
+    # def __init__(self, posi: list, nome: str, tab: Tabuleiro) -> None:
+    #     super().__init__(posi, nome, tab)
+
+    def verifica(self, lance: list) -> bool:
+        posi_lista=self.posi
+        #lances que um peao pode somar para a posição atual dele
+        lances_peão=[[-1,1][0,1][1,1]]
+        #soma todos os possiveis lances e armazena numa lista
+        lances_possiveis=[]
+        for x in lances_peão:
+            lances_possiveis.append([posi_lista[0]+x[0],posi_lista[1]+x[1]])
+        #vê se o peão ta querendo se mover pra casa valida gerada anteriormente
+        if (lance in lances_possiveis) and lance!=posi_lista:
+            #ve se o peão não quer sair do tabuleiro
+            if self.dentro_tab(posi_lista):
+                #olha o tab pra ver se o slot ta desocupado sla
+                if self.tab.get_peça_cord(lance)=='--':
+                    return True
+                #olha pra ver se os times são diferentes se ten alguem ocupando o slot
+                else:
+                    if self.tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper(): 
+                        return True
+        else:
+            return False
