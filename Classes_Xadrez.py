@@ -1,17 +1,16 @@
-import utils
 import numpy as np
 
 class Tabuleiro:
     def __init__(self, tamanho: int = 5) -> None:
         self.tamanho = tamanho
-        self.estado = np.array(['--']*25).reshape(5, 5)
-        # self.estado = np.array_split(['t1','t2','r','t3','t4'] +
-        #                              ['t'+str(x) for x in range(5,10)] +
-        #                              ['--']*5 + ['T'+str(x) for x in range(5,10)] + 
-        #                              ['T1','T2','R','T3','T4'], 5)
+        self.estado = np.array(['--']*(self.tamanho**2)).reshape(self.tamanho, self.tamanho)
+        self.mapeamento_peças = {}
 
     def get_tamanho(self) -> int:
         return self.tamanho
+
+    def get_cord_peça(self, peça_nome)-> list:
+        return  self.get_mapeamento_peças()[peça_nome].get_posi()
 
     def get_estado(self) -> np.array:
         return self.estado
@@ -33,8 +32,15 @@ class Tabuleiro:
         else:
             return False
 
+    def set_mapeamento_peças(self, nome_peça, obj_peça):
+        self.mapeamento_peças[nome_peça] = obj_peça
 
+    def mapeamento_recover(self, mapeamento):
+        self.mapeamento_peças = mapeamento
 
+    def get_mapeamento_peças(self):
+        return self.mapeamento_peças
+    
 class Peça:
     def __init__(self, posi: list, nome: str, tab: Tabuleiro) -> None:
         # (x,y)
@@ -43,6 +49,7 @@ class Peça:
         #posição inicial
         self.tab=tab
         tab.set_estado({nome:posi})
+        tab.set_mapeamento_peças(self.nome, self)
 
     def get_nome(self) -> str:
         return self.nome
@@ -57,6 +64,15 @@ class Peça:
         
     def set_nome(self, nome) -> None:
         self.nome=nome
+    
+    def dentro_tab(self, cord)->bool:
+        positivo=cord[0]>=0 and cord[1]>=0
+        dentro= cord[0] < self.tab.tamanho and cord[1] < self.tab.tamanho
+        if positivo and dentro:
+            return True
+        else:
+            return False
+
 
 class Torre(Peça):
     def verifica(self, lance):
@@ -76,7 +92,6 @@ class Torre(Peça):
             return False
 
 class Rei(Peça):
-
     def verifica(self, lance):
         posi_lista=self.posi
         #gera as tres cordenadas horizontais e verticais que o rei pode acessar a partir da posição horizontal dele dele
@@ -90,12 +105,12 @@ class Rei(Peça):
             if self.dentro_tab(lance):
 
                 #olha o tab pra ver se o slot ta desocupado sla
-                if tab.get_peça_cord(lance)=='--':
+                if self.tab.get_peça_cord(lance)=='--':
                     return True
 
                 #olha pra ver se os times são diferentes se ten alguem ocupando o slot
                 else:
-                    if tab.get_peça_cord(lance).isupper()!=self.nome.isupper(): 
+                    if self.tab.get_peça_cord(lance).isupper()!=self.nome.isupper(): 
                         return True
 
         else:
@@ -103,7 +118,10 @@ class Rei(Peça):
 
 
 class Cavalo(Peça):
-    def verifica(self, lance):
+    # def __init__(self, posi: list, nome: str, tab: Tabuleiro) -> None:
+    #     super().__init__(posi, nome, tab)
+
+    def verifica(self, lance: list) -> bool:
         posi_lista=self.posi
         #lances que um cavalo pode somar para a posição atual dele
         lances_cavalo=[[2,1],[-2,1],[2,-1],[-2,-1],
@@ -115,13 +133,13 @@ class Cavalo(Peça):
         #vê se o cavalo ta querendo se mover pra casa valida gerada anteriormente
         if (lance in lances_possiveis) and lance!=posi_lista:
             #ve se o cavalo não quer sair do tabuleiro
-            if self.dentro_tab(tab.tamanho()):
+            if self.dentro_tab(posi_lista):
                 #olha o tab pra ver se o slot ta desocupado sla
-                if tab.get_peça_cord(lance)=='--':
+                if self.tab.get_peça_cord(lance)=='--':
                     return True
                 #olha pra ver se os times são diferentes se ten alguem ocupando o slot
                 else:
-                    if tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper(): 
+                    if self.tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper(): 
                         return True
         else:
             return False

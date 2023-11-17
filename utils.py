@@ -14,19 +14,19 @@ def modifica_turno(turno, peça):
 
 def check(posição_rei, peças_dic):
     contador=0
-    for x in peças_dic.value():
+    for x in peças_dic.values():
         if x.verifica(posição_rei)== True:
             contador+=1
-    if x!=0:
+    if contador!=0:
         return True
     else:
         return False
 
-def checkmate(tabuleiro, turno, dicionario):
-    tabuleiro2=tabuleiro
-    for x in dicionario(values):
-        if x.get_nome()[0]==:
-            for y in posições:
+# def checkmate(tabuleiro, turno, dicionario):
+#     tabuleiro2=tabuleiro
+#     for x in dicionario(values):
+#         if x.get_nome()[0]==:
+#             for y in posições:
                 
 
 def destruidor(dicionario:dict, tab:Tabuleiro, lance:list)->None:
