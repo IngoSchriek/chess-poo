@@ -37,6 +37,7 @@ class Tabuleiro:
 
 class Peça:
     def __init__(self, posi: list, nome: str, tab: Tabuleiro) -> None:
+        # (x,y)
         self.posi=posi
         self.nome=nome
         #posição inicial
@@ -79,8 +80,8 @@ class Rei(Peça):
     def verifica(self, lance):
         posi_lista=self.posi
         #gera as tres cordenadas horizontais e verticais que o rei pode acessar a partir da posição horizontal dele dele
-	posi_horizontal = [posi_lista[0]+1, posi_lista[0]-1, posi_lista[0]]
-	posi_vertical = [posi_lista[1]+1, posi_lista[1]-1, posi_lista[1]]
+	    posi_horizontal = [posi_lista[0]+1, posi_lista[0]-1, posi_lista[0]]
+	    posi_vertical = [posi_lista[1]+1, posi_lista[1]-1, posi_lista[1]]
 
         #vê se o rei ta querendo se mover pra casa valida gerada anteriormente
         if (lance[0] in posi_horizontal and lance[1] in posi_vertical) and lance!=posi_lista:
