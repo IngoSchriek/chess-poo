@@ -60,7 +60,7 @@ class Peça:
 class Torre(Peça):
     def verifica(self, lance):
         posi_lista=self.posi
-        if self.dentro_tab(tab.tamanho()):
+        if tab.dentro_tab(lance):
             #verifica o bagulho da torre não poder passar por cima dos manos e não comer aliados
             if lance!=posi_lista:
                 if lance[0] == posi_lista[0]:
@@ -75,24 +75,31 @@ class Torre(Peça):
             return False
 
 class Rei(Peça):
+
     def verifica(self, lance):
         posi_lista=self.posi
         #gera as tres cordenadas horizontais e verticais que o rei pode acessar a partir da posição horizontal dele dele
-        cord1, cord1[0], cord1[1]= [posi_lista[0]]*3, cord1[0]+1, cord1[0]-1
-        cord2, cord2[0], cord2[1]=[posi_lista[1]]*3, cord2[0]+1, cord2[0]-1
+	posi_horizontal = [posi_lista[0]+1, posi_lista[0]-1, posi_lista[0]]
+	posi_vertical = [posi_lista[1]+1, posi_lista[1]-1, posi_lista[1]]
+
         #vê se o rei ta querendo se mover pra casa valida gerada anteriormente
-        if (lance[0] in cord1 and lance[1] in cord2) and lance!=posi_lista:
+        if (lance[0] in posi_horizontal and lance[1] in posi_vertical) and lance!=posi_lista:
+
             #ve se o rei não quer sair do tabuleiro
-            if self.dentro_tab(tab.tamanho()):
+            if self.dentro_tab(lance):
+
                 #olha o tab pra ver se o slot ta desocupado sla
                 if tab.get_peça_cord(lance)=='--':
                     return True
+
                 #olha pra ver se os times são diferentes se ten alguem ocupando o slot
                 else:
-                    if tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper(): 
+                    if tab.get_peça_cord(lance).isupper()!=self.nome.isupper(): 
                         return True
+
         else:
             return False
+
 
 class Cavalo(Peça):
     def verifica(self, lance):
