@@ -13,8 +13,8 @@ R = Rei([2, 4], 'R', tab)
 # c1 = Cavalo([1, 0], 'c1', tab)
 r = Rei([2, 0], 'r', tab)
 # c2 = Cavalo([3, 0], 'c2', tab)
-t1 = Torre([3,0], 't1', tab)
-T1 = Torre([3,4], 'T1', tab)
+t1 = Torre([2,1], 't1', tab)
+T1 = Torre([2,3], 'T1', tab)
 
 
 for x in range(len(tab.get_estado())):
