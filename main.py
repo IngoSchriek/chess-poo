@@ -1,4 +1,4 @@
-from Classes_Xadrez import Peça, Tabuleiro, Cavalo, Rei
+from Classes_Xadrez import Peça, Tabuleiro, Cavalo, Rei, Torre
 from utils import verifica_peça_no_tabuleiro,modifica_turno,check,destruidor
 
 import numpy as np
@@ -7,12 +7,15 @@ turno=0
 
 tab = Tabuleiro()
 
-C1 = Cavalo([1, 4], 'C1', tab)
+# C1 = Cavalo([1, 4], 'C1', tab)
 R = Rei([2, 4], 'R', tab)
-C2 = Cavalo([3, 4], 'C2', tab)
-c1 = Cavalo([1, 0], 'c1', tab)
+# C2 = Cavalo([3, 4], 'C2', tab)
+# c1 = Cavalo([1, 0], 'c1', tab)
 r = Rei([2, 0], 'r', tab)
-c2 = Cavalo([3, 0], 'c2', tab)
+# c2 = Cavalo([3, 0], 'c2', tab)
+t1 = Torre([3,0], 't1', tab)
+T1 = Torre([3,4], 'T1', tab)
+
 
 for x in range(len(tab.get_estado())):
     print(x, tab.get_estado()[x])

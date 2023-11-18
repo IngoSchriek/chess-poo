@@ -27,11 +27,11 @@ def checkmate(posição_rei, peças_dic,tab):
     checkmate_bool=True
     lances=[]
     #gera todas as posições do tab
-    for x in range(tab.tamanho):
-        for y in range(tab.tamanho):
+    for x in range(tab.get_tamanho()):
+        for y in range(tab.get_tamanho()):
             lances.append([x,y])
     #pega todas as peças vivas
-    for x in tab.get_mapeamento_peças.values():
+    for x in tab.get_mapeamento_peças().values():
         for y in lances:
             if x.verifica(y):
                 rei_turno=modifica_turno(turno,"R")

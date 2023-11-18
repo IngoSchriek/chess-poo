@@ -76,18 +76,51 @@ class Peça:
 
 class Torre(Peça):
     def verifica(self, lance):
-        posi_lista=self.posi
-        if tab.dentro_tab(lance):
-            #verifica o bagulho da torre não poder passar por cima dos manos e não comer aliados
-            if lance!=posi_lista:
-                if lance[0] == posi_lista[0]:
-                    for x in range(min(posi_lista[1],lance[1])+1, max(posi_lista[1],lance[1])-1):
-                        if tab.get_peça_cord([posi_lista[0],x])=="--":
-                            if get_peça_cord(lance)=='--':
-                                return True
-                            else:
-                                if tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper(): 
-                                    return True
+        x,y= self.posi
+        lances_possiveis = []
+        
+        #para cima
+        for i in range(1,self.tab.get_tamanho()):
+            if y+i < self.tab.get_tamanho():
+                if self.tab.get_peça_cord([x,y+i]) != '--':
+                    if self.get_nome().isupper() != self.tab.get_peça_cord([x,y+i]).isupper():
+                        lances_possiveis.append([x,y+i])
+                    break
+                else:
+                    lances_possiveis.append([x,y+i])
+        
+        #para baixo
+        for i in range(1,self.tab.get_tamanho()):
+            if y-i >= 0:
+                if self.tab.get_peça_cord([x,y-i]) != '--':
+                    if self.get_nome().isupper() != self.tab.get_peça_cord([x,y-i]).isupper():
+                        lances_possiveis.append([x,y-i])
+                    break
+                else:
+                    lances_possiveis.append([x,y-i])
+        
+        #para direita
+        for i in range(1,self.tab.get_tamanho()):
+            if x+i < self.tab.get_tamanho():
+                if self.tab.get_peça_cord([x+i,y]) != '--':
+                    if self.get_nome().isupper() != self.tab.get_peça_cord([x+i,y]).isupper():
+                        lances_possiveis.append([x+i,y])
+                    break
+                else:
+                    lances_possiveis.append([x+i,y])
+
+        #para esquerda
+        for i in range(1,self.tab.get_tamanho()):
+            if x-i >= 0:
+                if self.tab.get_peça_cord([x-i,y]) != '--':
+                    if self.get_nome().isupper() != self.tab.get_peça_cord([x-i,y]).isupper():
+                        lances_possiveis.append([x-i,y])
+                    break
+                else:
+                    lances_possiveis.append([x-i,y])
+        
+        if lance in lances_possiveis:
+            return True
         else:
             return False
 
@@ -118,9 +151,6 @@ class Rei(Peça):
 
 
 class Cavalo(Peça):
-    # def __init__(self, posi: list, nome: str, tab: Tabuleiro) -> None:
-    #     super().__init__(posi, nome, tab)
-
     def verifica(self, lance: list) -> bool:
         posi_lista=self.posi
         #lances que um cavalo pode somar para a posição atual dele
