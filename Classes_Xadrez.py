@@ -205,45 +205,45 @@ class Bispo(Peça):
         x,y= self.posi
         lances_possiveis = []
         
-        #para cima
+        #para cima e direita
         for i in range(1,self.tab.get_tamanho()):
-            if y+i < self.tab.get_tamanho():
-                if self.tab.get_peça_cord([x,y+i]) != '--':
-                    if self.get_nome().isupper() != self.tab.get_peça_cord([x,y+i]).isupper():
-                        lances_possiveis.append([x,y+i])
+            if x+i < self.tab.get_tamanho() and y+i < self.tab.get_tamanho():
+                if self.tab.get_peça_cord([x+i,y+i]) != '--':
+                    if self.get_nome().isupper() != self.tab.get_peça_cord([x+i,y+i]).isupper():
+                        lances_possiveis.append([x+i,y+i])
                     break
                 else:
-                    lances_possiveis.append([x,y+i])
+                    lances_possiveis.append([x+i,y+i])
         
-        #para baixo
+        #para baixo e direta
         for i in range(1,self.tab.get_tamanho()):
-            if y-i >= 0:
-                if self.tab.get_peça_cord([x,y-i]) != '--':
-                    if self.get_nome().isupper() != self.tab.get_peça_cord([x,y-i]).isupper():
-                        lances_possiveis.append([x,y-i])
+            if x+i < self.tab.get_tamanho() and y-i >= 0:
+                if self.tab.get_peça_cord([x+i,y-i]) != '--':
+                    if self.get_nome().isupper() != self.tab.get_peça_cord([x+i,y-i]).isupper():
+                        lances_possiveis.append([x+i,y-i])
                     break
                 else:
-                    lances_possiveis.append([x,y-i])
+                    lances_possiveis.append([x+i,y-i])
         
-        #para direita
+        #para cima e esquerda
         for i in range(1,self.tab.get_tamanho()):
-            if x+i < self.tab.get_tamanho():
-                if self.tab.get_peça_cord([x+i,y]) != '--':
-                    if self.get_nome().isupper() != self.tab.get_peça_cord([x+i,y]).isupper():
-                        lances_possiveis.append([x+i,y])
+            if x-i >= 0 and y+i < self.tab.get_tamanho():
+                if self.tab.get_peça_cord([x-i,y+i]) != '--':
+                    if self.get_nome().isupper() != self.tab.get_peça_cord([x-i,y+i]).isupper():
+                        lances_possiveis.append([x-i,y+i])
                     break
                 else:
-                    lances_possiveis.append([x+i,y])
+                    lances_possiveis.append([x-i,y+1])
 
-        #para esquerda
+        #para baixo e esquerda
         for i in range(1,self.tab.get_tamanho()):
-            if x-i >= 0:
-                if self.tab.get_peça_cord([x-i,y]) != '--':
-                    if self.get_nome().isupper() != self.tab.get_peça_cord([x-i,y]).isupper():
-                        lances_possiveis.append([x-i,y])
+            if x-i >= 0 and y-i>=0:
+                if self.tab.get_peça_cord([x-i,y-i]) != '--':
+                    if self.get_nome().isupper() != self.tab.get_peça_cord([x-i,y-i]).isupper():
+                        lances_possiveis.append([x-i,y-i])
                     break
                 else:
-                    lances_possiveis.append([x-i,y])
+                    lances_possiveis.append([x-i,y-i])
         
         if lance in lances_possiveis:
             return True
