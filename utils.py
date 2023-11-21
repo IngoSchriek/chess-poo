@@ -62,7 +62,7 @@ def destruidor(dicionario:dict, tab:Tabuleiro, lance:list)->None:
     key=tab.get_peça_cord(lance)
     if key!="--":
         del dicionario[key]
-        
+
 def evoluir(tab, turno):
     peças_dicio=tab.get_mapeamento_peças()
     matrix=tab.get_estado()
@@ -82,5 +82,3 @@ def evoluir(tab, turno):
             else: 
                 a=Dama(cordenada,escolha, tab)
     return a
-
-        

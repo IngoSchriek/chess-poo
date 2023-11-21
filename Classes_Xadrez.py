@@ -1,7 +1,7 @@
 import numpy as np
 
 class Tabuleiro:
-    def __init__(self, tamanho: int = 5) -> None:
+    def __init__(self, tamanho: int = 8) -> None:
         self.tamanho = tamanho
         self.estado = np.array(['--']*(self.tamanho**2)).reshape(self.tamanho, self.tamanho)
         self.mapeamento_peças = {}
@@ -181,7 +181,10 @@ class Peão(Peça):
     def verifica(self, lance: list) -> bool:
         posi_lista=self.posi
         #lances que um peao pode somar para a posição atual dele
-        lances_peão=[[-1,1][0,1][1,1]]
+        if self.get_nome().isupper():
+            lances_peão=[[-1,-1],[0,-1],[1,-1]]
+        else:
+            lances_peão=[[-1,1],[0,1],[1,1]]
         #soma todos os possiveis lances e armazena numa lista
         lances_possiveis=[]
         for x in lances_peão:
