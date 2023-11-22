@@ -1,4 +1,6 @@
-from Classes_Xadrez import Tabuleiro, Peça, Torre, Rei, Cavalo, Peão, Bispo
+from Classes_Xadrez import Tabuleiro, Peça, Torre, Rei, Cavalo, Peão, Bispo, Dama
+import numpy as np
+
 
 def verifica_peça_no_tabuleiro(peças, peça_desejada):
     while not peça_desejada in peças:
@@ -47,8 +49,6 @@ def checkmate(posição_rei, peças_dic,tab, turno):
                     peça_movendo.set_posi(pos_desejada, pos_atual)
                     tab.set_estado({peça:pos_atual})
                     tab.mapeamento_recover(mapeamento_backup)
-                    print('Seu rei está em cheque!')
-                    print('Lance inválido.')
 
                 else:
                     checkmate_bool=False
@@ -66,10 +66,9 @@ def destruidor(dicionario:dict, tab:Tabuleiro, lance:list)->None:
 def evoluir(tab, turno):
     peças_dicio=tab.get_mapeamento_peças()
     matrix=tab.get_estado()
-    linhas_pontas=matrix[0]+matrix[tab.get_tamanho()-1]
-    for x in linhas_pontas:
+    for x in (matrix[0].tolist()+matrix[tab.get_tamanho()-1].tolist()):
         if x[0]=="p" or x[0]=="P":
-            escolha=Input("Qual peça e numero tu quer?EX: C0, T5, B2, d8")
+            escolha=input("Qual peça e numero tu quer?EX: C0, T5, B2, d8")
             cordenada=tab.get_cord_peça(x)
             destruidor(peças_dicio,tab,cordenada)
             escolha=modifica_turno(turno, escolha)
@@ -81,4 +80,3 @@ def evoluir(tab, turno):
                 a=Torre(cordenada,escolha, tab)
             else: 
                 a=Dama(cordenada,escolha, tab)
-    return a

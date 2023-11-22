@@ -1,7 +1,5 @@
 from Classes_Xadrez import Peça, Tabuleiro, Cavalo, Rei, Torre, Dama, Bispo, Peão
-from utils import verifica_peça_no_tabuleiro,modifica_turno,check,destruidor
-
-import numpy as np
+from utils import verifica_peça_no_tabuleiro,modifica_turno,check,destruidor, evoluir
 
 turno=0
 
@@ -78,7 +76,6 @@ while not(Empate):
         print('Posição inválida. ')
         continue
 
-    print(tab.get_mapeamento_peças())
 
     rei_turno=modifica_turno(turno,"R")
     mapeamento_backup = tab.get_mapeamento_peças()
@@ -94,10 +91,11 @@ while not(Empate):
         print('Seu rei está em cheque!')
         print('Lance inválido.')
         continue
+    evoluir(tab,turno)
 
     for x in range(len(tab.get_estado())):
         print(x, tab.get_estado()[x])
-    print('    0    1    2    3    4')
+    print('    0    1    2    3    4    5     6    7')
     turno+=1
 if check_bool==True:
     print("C H E C K M A T E")
