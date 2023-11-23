@@ -135,23 +135,19 @@ class Torre(Peça):
             return False
 
 class Rei(Peça):
-    def verifica(self, lance: list) -> bool:
-        x,y=self.posi
+    def verifica(self, lance):
+        posi_lista=self.posi
         lances_possiveis = []
 
-        # gera as coordenadas ao redor do rei
-        for sx in range(-1, 2):
-            for sy in range(-1, 2):
-                lance_candidato = (x+sx,x+sy)
+        lances_rei = [[-1, -1],[-1, 0],[-1, 1],[0, -1],[0, 1],[1, -1],[1, 0],[1, 1]]
+        for x in lances_rei:
+            lance_candidato = [posi_lista[0]+x[0],posi_lista[1]+x[1]]
+            if lance_candidato != posi_lista \
+                and self.dentro_tab(lance_candidato) \
+                    and (self.tab.get_peça_cord(lance_candidato)=='--' or
+                         self.tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper()):
+                lances_possiveis.append(lance_candidato)
 
-                # verifica se o lance é para a mesma posição, se está dentro do tabuleiro
-                # e se há alguma peça inimiga no lance candidato a ser lance possível ou
-                # se está vazio
-                if lance_candidato != (x,y) and self.dentro_tab(lance_candidato) \
-                    and (self.tab.get_peça_cord(lance_candidato)=='--' 
-                         or self.tab.get_peça_cord(lance_candidato).isupper()!=self.nome.isupper()):
-                    lances_possiveis.append([x+sx,y+sy])
-        
         self.set_lances_possiveis(lances_possiveis)
         if lance in lances_possiveis:
             return True
@@ -164,7 +160,7 @@ class Cavalo(Peça):
         #lances que um cavalo pode somar para a posição atual dele
         lances_cavalo=[[2,1],[-2,1],[2,-1],[-2,-1],
         [1,2],[-1,2],[1,-2],[-1,-2]]
-        
+
         # soma todos os possiveis lances e armazena numa lista aqueles que
         # cumprem com os requisitos para lance válido
         lances_possiveis=[]
@@ -247,7 +243,7 @@ class Bispo(Peça):
                         lances_possiveis.append([x-i,y+i])
                     break
                 else:
-                    lances_possiveis.append([x-i,y+1])
+                    lances_possiveis.append([x-i,y+i])
 
         #para baixo e esquerda
         for i in range(1,self.tab.get_tamanho()):
@@ -310,7 +306,8 @@ class Dama(Peça):
                     break
                 else:
                     lances_possiveis.append([x-i,y-i])
-                #para cima
+                    
+        #para cima
         for i in range(1,self.tab.get_tamanho()):
             if y+i < self.tab.get_tamanho():
                 if self.tab.get_peça_cord([x,y+i]) != '--':
