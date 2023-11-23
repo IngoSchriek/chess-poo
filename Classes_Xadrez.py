@@ -65,6 +65,9 @@ class Peça:
     def set_nome(self, nome) -> None:
         self.nome=nome
     
+    def verifica(self) -> True:
+        return True
+
     def dentro_tab(self, cord)->bool:
         positivo=cord[0]>=0 and cord[1]>=0
         dentro= cord[0] < self.tab.tamanho and cord[1] < self.tab.tamanho
@@ -182,9 +185,16 @@ class Peão(Peça):
         posi_lista=self.posi
         #lances que um peao pode somar para a posição atual dele
         if self.get_nome().isupper():
-            lances_peão=[[-1,-1],[0,-1],[1,-1]]
+            if posi_lista[1]==6:
+                lances_peão=[[-1,-1],[0,-1],[1,-1],[0,-2]]
+            else:
+                lances_peão=[[-1,-1],[0,-1],[1,-1]]
         else:
-            lances_peão=[[-1,1],[0,1],[1,1]]
+            if posi_lista[1]==1:
+                lances_peão=[[-1,1],[0,1],[1,1],[0,2]]
+            else:
+                lances_peão=[[-1,1],[0,1],[1,1]]
+
         #soma todos os possiveis lances e armazena numa lista
         lances_possiveis=[]
         for x in lances_peão:
@@ -287,7 +297,7 @@ class Dama(Peça):
                         lances_possiveis.append([x-i,y+i])
                     break
                 else:
-                    lances_possiveis.append([x-i,y+1])
+                    lances_possiveis.append([x-i,y+i])
 
         #para baixo e esquerda
         for i in range(1,self.tab.get_tamanho()):
