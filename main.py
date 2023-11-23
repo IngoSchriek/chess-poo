@@ -5,9 +5,6 @@ turno=0
 
 tab = Tabuleiro(8)
 
-# C1 = Cavalo([1, 4], 'C1', tab)
-# C2 = Cavalo([3, 4], 'C2', tab)
-# c1 = Cavalo([1, 0], 'c1', tab)
 r = Rei([3, 0], 'r', tab)
 c1=Cavalo([1,0], 'c1', tab)
 c2=Cavalo([6,0], 'c2', tab)
@@ -83,7 +80,7 @@ while not(Empate):
     peça_movendo.set_posi(pos_atual, pos_desejada)
     posi_rei = tab.get_cord_peça(rei_turno)
     
-    if check(posi_rei,tab.get_mapeamento_peças()):
+    if check(posi_rei,tab.get_mapeamento_peças(), rei_turno):
         peça = tab.get_peça_cord(pos_desejada)
         peça_movendo.set_posi(pos_desejada, pos_atual)
         tab.set_estado({peça:pos_atual})

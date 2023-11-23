@@ -48,6 +48,7 @@ class Peça:
         self.nome=nome
         #posição inicial
         self.tab=tab
+        self.lances_possiveis = []
         tab.set_estado({nome:posi})
         tab.set_mapeamento_peças(self.nome, self)
 
@@ -57,18 +58,18 @@ class Peça:
     def get_posi(self) -> list:
         return self.posi
 
-    def set_posi(self, pos_anterior, pos_desejada) -> None:
+    def set_posi(self, pos_anterior: list, pos_desejada: list) -> None:
         self.posi=pos_desejada
         self.tab.set_estado({'--': pos_anterior})
         self.tab.set_estado({self.nome: pos_desejada})
         
-    def set_nome(self, nome) -> None:
+    def set_nome(self, nome: str) -> None:
         self.nome=nome
     
     def verifica(self) -> True:
         return True
 
-    def dentro_tab(self, cord)->bool:
+    def dentro_tab(self, cord: list)->bool:
         positivo=cord[0]>=0 and cord[1]>=0
         dentro= cord[0] < self.tab.tamanho and cord[1] < self.tab.tamanho
         if positivo and dentro:
@@ -76,9 +77,14 @@ class Peça:
         else:
             return False
 
+    def get_lances_possiveis(self) -> list:
+        return self.lances_possiveis
+    
+    def set_lances_possiveis(self, lances_possiveis: list) -> None:
+        self.lances_possiveis = lances_possiveis
 
 class Torre(Peça):
-    def verifica(self, lance):
+    def verifica(self, lance: list) -> bool:
         x,y= self.posi
         lances_possiveis = []
         
@@ -121,37 +127,36 @@ class Torre(Peça):
                     break
                 else:
                     lances_possiveis.append([x-i,y])
-        
+                    
+        self.set_lances_possiveis(lances_possiveis)
         if lance in lances_possiveis:
             return True
         else:
             return False
 
 class Rei(Peça):
-    def verifica(self, lance):
-        posi_lista=self.posi
-        #gera as tres cordenadas horizontais e verticais que o rei pode acessar a partir da posição horizontal dele dele
-        posi_horizontal = [posi_lista[0]+1, posi_lista[0]-1, posi_lista[0]]
-        posi_vertical = [posi_lista[1]+1, posi_lista[1]-1, posi_lista[1]]
+    def verifica(self, lance: list) -> bool:
+        x,y=self.posi
+        lances_possiveis = []
 
-        #vê se o rei ta querendo se mover pra casa valida gerada anteriormente
-        if (lance[0] in posi_horizontal and lance[1] in posi_vertical) and lance!=posi_lista:
+        # gera as coordenadas ao redor do rei
+        for sx in range(-1, 2):
+            for sy in range(-1, 2):
+                lance_candidato = (x+sx,x+sy)
 
-            #ve se o rei não quer sair do tabuleiro
-            if self.dentro_tab(lance):
-
-                #olha o tab pra ver se o slot ta desocupado sla
-                if self.tab.get_peça_cord(lance)=='--':
-                    return True
-
-                #olha pra ver se os times são diferentes se ten alguem ocupando o slot
-                else:
-                    if self.tab.get_peça_cord(lance).isupper()!=self.nome.isupper(): 
-                        return True
-
+                # verifica se o lance é para a mesma posição, se está dentro do tabuleiro
+                # e se há alguma peça inimiga no lance candidato a ser lance possível ou
+                # se está vazio
+                if lance_candidato != (x,y) and self.dentro_tab(lance_candidato) \
+                    and (self.tab.get_peça_cord(lance_candidato)=='--' 
+                         or self.tab.get_peça_cord(lance_candidato).isupper()!=self.nome.isupper()):
+                    lances_possiveis.append([x+sx,y+sy])
+        
+        self.set_lances_possiveis(lances_possiveis)
+        if lance in lances_possiveis:
+            return True
         else:
             return False
-
 
 class Cavalo(Peça):
     def verifica(self, lance: list) -> bool:
@@ -159,28 +164,25 @@ class Cavalo(Peça):
         #lances que um cavalo pode somar para a posição atual dele
         lances_cavalo=[[2,1],[-2,1],[2,-1],[-2,-1],
         [1,2],[-1,2],[1,-2],[-1,-2]]
-        #soma todos os possiveis lances e armazena numa lista
+        
+        # soma todos os possiveis lances e armazena numa lista aqueles que
+        # cumprem com os requisitos para lance válido
         lances_possiveis=[]
         for x in lances_cavalo:
-            lances_possiveis.append([posi_lista[0]+x[0],posi_lista[1]+x[1]])
-        #vê se o cavalo ta querendo se mover pra casa valida gerada anteriormente
-        if (lance in lances_possiveis) and lance!=posi_lista:
-            #ve se o cavalo não quer sair do tabuleiro
-            if self.dentro_tab(posi_lista):
-                #olha o tab pra ver se o slot ta desocupado sla
-                if self.tab.get_peça_cord(lance)=='--':
-                    return True
-                #olha pra ver se os times são diferentes se ten alguem ocupando o slot
-                else:
-                    if self.tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper(): 
-                        return True
+            lance_candidato = [posi_lista[0]+x[0],posi_lista[1]+x[1]]
+            if lance_candidato != posi_lista \
+                and self.dentro_tab(lance_candidato) \
+                    and (self.tab.get_peça_cord(lance_candidato)=='--' or
+                         self.tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper()):
+                lances_possiveis.append(lance_candidato)
+
+        self.set_lances_possiveis(lances_possiveis)
+        if lance in lances_possiveis:
+            return True
         else:
             return False
         
 class Peão(Peça):
-    # def __init__(self, posi: list, nome: str, tab: Tabuleiro) -> None:
-    #     super().__init__(posi, nome, tab)
-
     def verifica(self, lance: list) -> bool:
         posi_lista=self.posi
         #lances que um peao pode somar para a posição atual dele
@@ -195,26 +197,25 @@ class Peão(Peça):
             else:
                 lances_peão=[[-1,1],[0,1],[1,1]]
 
-        #soma todos os possiveis lances e armazena numa lista
+        # soma todos os possiveis lances e armazena numa lista todos aqueles que
+        # cumprem as condiçoes para lance válido
         lances_possiveis=[]
         for x in lances_peão:
-            lances_possiveis.append([posi_lista[0]+x[0],posi_lista[1]+x[1]])
-        #vê se o peão ta querendo se mover pra casa valida gerada anteriormente
-        if (lance in lances_possiveis) and lance!=posi_lista:
-            #ve se o peão não quer sair do tabuleiro
-            if self.dentro_tab(posi_lista):
-                #olha o tab pra ver se o slot ta desocupado sla
-                if self.tab.get_peça_cord(lance)=='--':
-                    return True
-                #olha pra ver se os times são diferentes se ten alguem ocupando o slot
-                else:
-                    if self.tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper(): 
-                        return True
+            lance_candidato = [posi_lista[0]+x[0],posi_lista[1]+x[1]]
+            if lance_candidato != posi_lista \
+                and self.dentro_tab(lance_candidato) \
+                    and (self.tab.get_peça_cord(lance_candidato)=='--' or
+                         self.tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper()):
+                lances_possiveis.append(lance_candidato)
+
+        self.set_lances_possiveis(lances_possiveis)
+        if lance in lances_possiveis:
+            return True
         else:
             return False
 
 class Bispo(Peça):
-    def verifica(self, lance):
+    def verifica(self, lance: list) -> bool:
         x,y= self.posi
         lances_possiveis = []
         
@@ -258,6 +259,7 @@ class Bispo(Peça):
                 else:
                     lances_possiveis.append([x-i,y-i])
         
+        self.set_lances_possiveis(lances_possiveis)
         if lance in lances_possiveis:
             return True
         else:
@@ -265,7 +267,7 @@ class Bispo(Peça):
         
 
 class Dama(Peça):
-    def verifica(self, lance):
+    def verifica(self, lance: list) -> bool:
         x,y= self.posi
         lances_possiveis = []
         
@@ -348,6 +350,7 @@ class Dama(Peça):
                 else:
                     lances_possiveis.append([x-i,y])
         
+        self.set_lances_possiveis(lances_possiveis)
         if lance in lances_possiveis:
             return True
         else:

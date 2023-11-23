@@ -13,9 +13,11 @@ def modifica_turno(turno, peça):
     else:
         return peça.lower()
 
-def check(posição_rei, peças_dic):
+def check(posição_rei, peças_dic, rei_turno):
     contador=0
-    for x in peças_dic.values():
+    # filtra o dicionário
+    peças_inimigas_dic = {k: v for k, v in peças_dic.items() if k.isupper() != rei_turno.isupper()}
+    for x in peças_inimigas_dic.values():
         if x.verifica(posição_rei)== True:
             contador+=1
     if contador!=0:
@@ -28,8 +30,8 @@ def checkmate(posição_rei, peças_dic,tab, turno):
     checkmate_bool=True
     lances=[]
     #gera todas as posições do tab
-    for x in range(tab.tamanho):
-        for y in range(tab.tamanho):
+    for x in range(tab.get_tamanho()):
+        for y in range(tab.get_tamanho()):
             lances.append([x,y])
     #pega todas as peças vivas
     for x in tab.get_mapeamento_peças.values():
@@ -80,3 +82,4 @@ def evoluir(tab, turno):
                 a=Torre(cordenada,escolha, tab)
             else: 
                 a=Dama(cordenada,escolha, tab)
+
