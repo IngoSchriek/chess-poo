@@ -9,7 +9,7 @@ class Tabuleiro:
     def get_tamanho(self) -> int:
         return self.tamanho
 
-    def get_cord_peça(self, peça_nome)-> list:
+    def get_cord_peça(self, peça_nome: str)-> list:
         return  self.get_mapeamento_peças()[peça_nome].get_posi()
 
     def get_estado(self) -> np.array:
@@ -20,25 +20,17 @@ class Tabuleiro:
             x,y = cord
             self.estado[y][x] = peça
     
-    def get_peça_cord(self, cord)-> str:
+    def get_peça_cord(self, cord: list)-> str:
         x,y=cord
         return self.estado[y][x]
-    
-    def dentro_tab(self, cord)->bool:
-        positivo=cord[0]>=0 and cord[1]>=0
-        dentro=cord[0]<=self.tamanho and cord[1]<=self.tamanho
-        if positivo and dentro:
-            return True
-        else:
-            return False
 
-    def set_mapeamento_peças(self, nome_peça, obj_peça):
+    def set_mapeamento_peças(self, nome_peça: str, obj_peça) -> None:
         self.mapeamento_peças[nome_peça] = obj_peça
 
-    def mapeamento_recover(self, mapeamento):
+    def mapeamento_recover(self, mapeamento: dict) -> None:
         self.mapeamento_peças = mapeamento
 
-    def get_mapeamento_peças(self):
+    def get_mapeamento_peças(self) -> dict:
         return self.mapeamento_peças
     
 class Peça:
@@ -62,9 +54,6 @@ class Peça:
         self.posi=pos_desejada
         self.tab.set_estado({'--': pos_anterior})
         self.tab.set_estado({self.nome: pos_desejada})
-        
-    def set_nome(self, nome: str) -> None:
-        self.nome=nome
     
     def verifica(self) -> True:
         return True
