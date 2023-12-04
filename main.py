@@ -42,13 +42,17 @@ P6=Peão([5,6],'P6',tab)
 P7=Peão([6,6],'P7',tab)
 P8=Peão([7,6],'P8',tab)
 
+# Posição de chequemate em 1 lance
+# r = Rei([3, 0], 'r', tab)
+# R = Rei([3, 7], 'R', tab)
+# D1=Dama([4,2],"D1", tab)
+# D2=Dama([2,7],"D2", tab)
 
 for x in range(len(tab.get_estado())):
     print(x, tab.get_estado()[x])
 print('    0    1    2    3    4    5     6    7')
 
 while not checkmate_empate(tab, turno):
-# while True:
     #pede a peça desejada e já deixa no do time tlgd
     if modifica_turno(turno, 'X').isupper():
         print(f'Turno: {turno}')
