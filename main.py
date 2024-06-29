@@ -2,15 +2,15 @@ from Classes_Xadrez import Peça, Tabuleiro, Cavalo, Rei, Torre, Dama, Bispo, Pe
 from utils import verifica_peça_no_tabuleiro,modifica_turno,check,destruidor, evoluir, checkmate_empate
 
 turno=0
+n = 8
+tab = Tabuleiro(n)
 
-tab = Tabuleiro(8)
-
-r = Rei([3, 0], 'r', tab)
+r = Rei([4, 0], 'r', tab)
 c1=Cavalo([1,0], 'c1', tab)
 c2=Cavalo([6,0], 'c2', tab)
 b1=Bispo([2,0], 'b1', tab)
 b2=Bispo([5,0], 'b2', tab)
-d1=Dama([4,0],"d1", tab)
+d1=Dama([3,0],"d1", tab)
 t1=Torre([0,0], 't1',tab)
 t2=Torre([7,0], 't2',tab)
 
@@ -24,12 +24,12 @@ p7=Peão([6,1],'p7',tab)
 p8=Peão([7,1],'p8',tab)
 
 
-R = Rei([3, 7], 'R', tab)
+R = Rei([4, 7], 'R', tab)
 C1=Cavalo([1,7], 'C1', tab)
 C2=Cavalo([6,7], 'C2', tab)
 B1=Bispo([2,7], 'B1', tab)
 B2=Bispo([5,7], 'B2', tab)
-D1=Dama([4,7],"D1", tab)
+D1=Dama([3,7],"D1", tab)
 T1=Torre([0,7], 'T1',tab)
 T2=Torre([7,7], 'T2',tab)
 
@@ -50,7 +50,9 @@ P8=Peão([7,6],'P8',tab)
 
 for x in range(len(tab.get_estado())):
     print(x, tab.get_estado()[x])
-print('    0    1    2    3    4    5     6    7')
+for _ in range(n):
+    print("  ", _, end=' ')
+print()
 
 while not checkmate_empate(tab, turno):
     #pede a peça desejada e já deixa no do time tlgd

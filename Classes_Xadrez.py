@@ -134,7 +134,7 @@ class Rei(Peça):
             if lance_candidato != posi_lista \
                 and self.dentro_tab(lance_candidato) \
                     and (self.tab.get_peça_cord(lance_candidato)=='--' or
-                         self.tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper()):
+                         self.get_nome().isupper() != self.tab.get_peça_cord(lance_candidato).isupper()):
                 lances_possiveis.append(lance_candidato)
 
         self.set_lances_possiveis(lances_possiveis)
@@ -158,7 +158,7 @@ class Cavalo(Peça):
             if lance_candidato != posi_lista \
                 and self.dentro_tab(lance_candidato) \
                     and (self.tab.get_peça_cord(lance_candidato)=='--' or
-                         self.tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper()):
+                         self.get_nome().isupper() != self.tab.get_peça_cord(lance_candidato).isupper()):
                 lances_possiveis.append(lance_candidato)
 
         self.set_lances_possiveis(lances_possiveis)
@@ -190,7 +190,8 @@ class Peão(Peça):
             if lance_candidato != posi_lista \
                 and self.dentro_tab(lance_candidato) \
                     and (self.tab.get_peça_cord(lance_candidato)=='--' or
-                         self.tab.get_peça_cord(lance)[0].isupper()!=self.nome[0].isupper()):
+                         (self.get_nome().isupper() != self.tab.get_peça_cord(lance_candidato).isupper() 
+                            and not (x in [[0,1],[0,-1],[0,2],[0,-2]]))):
                 lances_possiveis.append(lance_candidato)
 
         self.set_lances_possiveis(lances_possiveis)
